@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_95dc5e79770b8317f538eb6e4b7886d6 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+</head>
+<body>
+    
+    
+    <div style="position: fixed; bottom: 30px; left: 30px; z-index: 9999;
+                background: white; padding: 10px 14px; border-radius: 6px;
+                box-shadow: 0 1px 4px rgba(0,0,0,0.3); font-size: 13px;">
+      <b>Bushfire Risk</b><br>
+      <span style="color:#2ecc71;">&#9632;</span> Low<br>
+      <span style="color:#f1c40f;">&#9632;</span> Moderate<br>
+      <span style="color:#e67e22;">&#9632;</span> High<br>
+      <span style="color:#c0392b;">&#9632;</span> Extreme
+    </div>
+    
+    
+            <div class="folium-map" id="map_95dc5e79770b8317f538eb6e4b7886d6" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_95dc5e79770b8317f538eb6e4b7886d6 = L.map(
+                "map_95dc5e79770b8317f538eb6e4b7886d6",
+                {
+                    center: [-33.7, 150.28],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 10,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_51ced1d9e35a37f2158a942cff58cee2 = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_51ced1d9e35a37f2158a942cff58cee2.addTo(map_95dc5e79770b8317f538eb6e4b7886d6);
+        
+    
+            var tile_layer_bfb951e6865de2f28c46ba6ef5510bf1 = L.tileLayer(
+                "https://earthengine.googleapis.com/v1/projects/nsw-bushfire-risk-mapping/maps/d5ab3de7035aeca42a2c3dfac9014e1b-eb252e46690791a5f43f45f9cc85e7cb/tiles/{z}/{x}/{y}",
+                {
+  "minZoom": 0,
+  "maxZoom": 18,
+  "maxNativeZoom": 18,
+  "noWrap": false,
+  "attribution": "Google Earth Engine",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1.0,
+}
+
+            );
+        
+    
+            tile_layer_bfb951e6865de2f28c46ba6ef5510bf1.addTo(map_95dc5e79770b8317f538eb6e4b7886d6);
+        
+    
+            var tile_layer_6fb595cc1e02c22a591e6e8b54812d37 = L.tileLayer(
+                "https://earthengine.googleapis.com/v1/projects/nsw-bushfire-risk-mapping/maps/b506635946fd0fd9948c74ba56afd7ae-6b4abef86edf878a4bea5dec69a01ce6/tiles/{z}/{x}/{y}",
+                {
+  "minZoom": 0,
+  "maxZoom": 18,
+  "maxNativeZoom": 18,
+  "noWrap": false,
+  "attribution": "Google Earth Engine",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1.0,
+}
+
+            );
+        
+    
+            var tile_layer_652c58c991df46e73219fec00db25ea4 = L.tileLayer(
+                "https://earthengine.googleapis.com/v1/projects/nsw-bushfire-risk-mapping/maps/a86d849b6c1ded13d2af114c04ab8177-3e6995f638465ce7bd87ccf15a5c6cf2/tiles/{z}/{x}/{y}",
+                {
+  "minZoom": 0,
+  "maxZoom": 18,
+  "maxNativeZoom": 18,
+  "noWrap": false,
+  "attribution": "Google Earth Engine",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1.0,
+}
+
+            );
+        
+    
+            var layer_control_3f3a8fd95ed8e767ff565d69f2a2c7e8_layers = {
+                base_layers : {
+                    "openstreetmap" : tile_layer_51ced1d9e35a37f2158a942cff58cee2,
+                },
+                overlays :  {
+                    "Bushfire Risk Class" : tile_layer_bfb951e6865de2f28c46ba6ef5510bf1,
+                    "NDVI (fuel load)" : tile_layer_6fb595cc1e02c22a591e6e8b54812d37,
+                    "NDMI (moisture)" : tile_layer_652c58c991df46e73219fec00db25ea4,
+                },
+            };
+            let layer_control_3f3a8fd95ed8e767ff565d69f2a2c7e8 = L.control.layers(
+                layer_control_3f3a8fd95ed8e767ff565d69f2a2c7e8_layers.base_layers,
+                layer_control_3f3a8fd95ed8e767ff565d69f2a2c7e8_layers.overlays,
+                {
+  "position": "topright",
+  "collapsed": false,
+  "autoZIndex": true,
+}
+            ).addTo(map_95dc5e79770b8317f538eb6e4b7886d6);
+
+        
+    
+            tile_layer_51ced1d9e35a37f2158a942cff58cee2.addTo(map_95dc5e79770b8317f538eb6e4b7886d6);
+        
+    
+            tile_layer_bfb951e6865de2f28c46ba6ef5510bf1.addTo(map_95dc5e79770b8317f538eb6e4b7886d6);
+        
+</script>
+</html>
