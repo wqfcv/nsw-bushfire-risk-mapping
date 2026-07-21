@@ -50,12 +50,14 @@ north-facing exposure:   0.15
 ```
 nsw-bushfire-risk-mapping/
 ├── notebooks/
-│   └── 01_bushfire_risk_mapping.ipynb   # end-to-end pipeline, runs in Colab
+│   ├── 01_bushfire_risk_mapping.ipynb   # end-to-end pipeline, runs in Colab
+│   └── 02_validation.ipynb              # validates risk index vs FESM 2019/20 fire severity
 ├── src/
 │   ├── risk_index.py                    # index calculation logic
-│   └── mapping.py                       # folium/GEE visualisation helpers
-├── outputs/                              # generated maps (created after running)
-├── data/                                  # optional local reference data
+│   ├── mapping.py                       # folium/GEE visualisation helpers
+│   └── clip_fire_severity_raster.py     # run locally: clips raw SEED grid to the AOI
+├── outputs/                              # generated maps + charts (created after running)
+├── data/                                  # small, clipped reference raster (raw downloads gitignored)
 ├── requirements.txt
 └── README.md
 ```
@@ -77,10 +79,42 @@ This project uses Google Earth Engine, so it's designed to run in
 
 ## Validation approach
 
-Qualitative validation is done by overlaying NSW RFS historical fire
-extent polygons (available via [NSW SEED](https://www.seed.nsw.gov.au/))
-against the risk classes, checking that previously burnt areas skew toward
-the "High"/"Extreme" classes. See the notes in the final notebook cell.
+`notebooks/02_validation.ipynb` checks the risk index against what
+actually happened on the ground: NSW's **Fire Extent and Severity Mapping
+(FESM) 2019/20** dataset (via [NSW SEED](https://www.seed.nsw.gov.au/)),
+which classifies every part of the 2019–20 fire footprint into
+unburnt/low/moderate/high/extreme severity.
+
+The SEED "Data Download Package" for FESM is an **ESRI Arc/Info Binary
+Grid raster** (a folder of `.adf` files), not a shapefile — every pixel
+carries a severity class code. Since the risk index is also a raster,
+validation is done **pixel-to-pixel** rather than via polygon zonal
+statistics.
+
+Since the statewide grid is 100s of MB, it's clipped down locally first:
+
+```bash
+pip install rasterio
+python src/clip_fire_severity_raster.py \
+    --input "D:/download/FireSeverityFESM/fesm_201920" \
+    --output data/fesm_2019_20_blue_mountains.tif
+```
+
+This produces a small GeoTIFF clipped to the same Blue Mountains bounding
+box used in notebook 01 — safe to commit to GitHub, unlike the raw
+statewide grid. The script prints the unique class codes found, which
+should be cross-checked against the FESMv3 metadata PDF bundled with the
+SEED download (codes aren't assumed — confirm them before trusting the
+results).
+
+`02_validation.ipynb` then exports the risk raster locally, aligns both
+rasters onto the same pixel grid, and plots:
+- a boxplot of risk index by observed severity class
+- a heatmap cross-tabulating predicted risk class vs. observed severity
+
+The expectation: areas that burned at high/extreme severity should show
+a higher pre-season risk index than areas that stayed unburnt or burned
+lightly.
 
 ## Limitations & next steps
 

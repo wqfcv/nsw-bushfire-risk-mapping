@@ -4,3 +4,17 @@ __pycache__/
 .DS_Store
 outputs/*.html
 !outputs/.gitkeep
+
+# Raw statewide downloads (100s of MB) - never commit these.
+# Only the small, clipped data/*.tif / *.geojson files should be tracked.
+data/raw/
+data/*.zip
+data/*.shp
+data/*.shx
+data/*.dbf
+data/*.prj
+data/*.cpg
+# ESRI Arc/Info Binary Grid raw downloads (folder full of .adf files)
+data/**/*.adf
+data/**/info/
+!data/.gitkeep
